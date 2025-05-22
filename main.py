@@ -1,23 +1,22 @@
 import pygame
 from constants import *
 
-BLUE  = (0, 0, 255)
-RED   = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
+
 
 class App:
     def __init__(self):
         self.__running = True
         self.__display_surf = None
         self.size = SCREEN_WIDTH, SCREEN_HEIGHT
+        self.clock = None
+        self.dt = None
 
     def on_init(self):
         pygame.init()
         self.__display_surf = pygame.display.set_mode(self.size)
         self.__running = True
         self.clock = pygame.time.Clock()
+        self.dt = 0
 
     def on_event(self, event):
         if event.type == pygame.QUIT:
@@ -27,9 +26,9 @@ class App:
         pass
 
     def on_render(self):
-        self.__display_surf.fill(WHITE)
+        self.__display_surf.fill(BLACK)
         pygame.display.update()
-        self.clock.tick(60)
+        self.dt = self.clock.tick(60)/1000
         pass
 
     def on_cleanup(self):
