@@ -1,5 +1,6 @@
 import pygame
 from constants import *
+from player import Player
 
 
 
@@ -10,6 +11,7 @@ class App:
         self.size = SCREEN_WIDTH, SCREEN_HEIGHT
         self.clock = None
         self.dt = None
+        self.player = None
 
     def on_init(self):
         pygame.init()
@@ -17,16 +19,25 @@ class App:
         self.__running = True
         self.clock = pygame.time.Clock()
         self.dt = 0
+        self.player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 
     def on_event(self, event):
         if event.type == pygame.QUIT:
             self.__running = False
 
     def on_loop(self):
+        self.player.update(self.dt)
         pass
 
     def on_render(self):
+        #Black out screen
         self.__display_surf.fill(BLACK)
+
+        #Draw actors
+        self.player.draw(self.__display_surf)
+
+
+        #Update screen and tick the clock
         pygame.display.update()
         self.dt = self.clock.tick(60)/1000
         pass
